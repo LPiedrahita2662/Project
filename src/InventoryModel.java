@@ -15,28 +15,30 @@
 *
 * <<Add more references here>>
 *
-* Version: 2026-04-29
+* Version: 2026-05-04
 */
 
 import java.util.ArrayList;
 
 /**
- * Purpose: The reponsibility of Room is ...
+ * Purpose: The reponsibility of InventoryModel is ...
  *
- * Room is-a ...
- * Room is ...
+ * InventoryModel is-a ...
+ * InventoryModel is ...
  */
-public class Room
+public class InventoryModel
 {
 	private ArrayList<Item> items;
-	private String roomName;
-	private Door door;
+	private Item selectedItem;
 	
-	public Room(String roomName, Door door)
+	public InventoryModel()
 	{
-		this.roomName = roomName;
-		this.door = door;
 		this.items = new ArrayList<Item>();
+	}
+	
+	public ArrayList<Item> getItems()
+	{
+		return items;
 	}
 	
 	public void addItem(Item item)
@@ -48,41 +50,24 @@ public class Room
 	{
 		items.remove(item);
 	}
-
-	/**
-	 * @return the items
-	 */
-	public ArrayList<Item> getItems()
+	
+	public Item getSelectedItem()
 	{
-		return items;
+		return selectedItem;
 	}
-
-	/**
-	 * @param items the items to set
-	 */
-	public void setItems(ArrayList<Item> items)
+	
+	public void setSelectedItem(Item selectedItem)
 	{
-		this.items = items;
+		this.selectedItem = selectedItem;
 	}
-
-	/**
-	 * @return the roomName
-	 */
-	public String getRoomName()
+	
+	public void clearSelectedItem()
 	{
-		return roomName;
-	}
-
-	/**
-	 * @return the door
-	 */
-	public Door getDoor()
-	{
-		return door;
+		this.selectedItem = null;
 	}
 	
 	public String toString()
 	{
-	    return "roomName = " + roomName + ", door = " + door + ", items = " + items;
+		return "items = " + items + ", selectedItem = " + selectedItem;
 	}
 }

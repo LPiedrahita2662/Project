@@ -15,16 +15,16 @@
 *
 * <<Add more references here>>
 *
-* Version: 2026-05-11
+* Version: 2026-05-04
 */
 
 /**
- * Purpose: The reponsibility of RoomView is ...
+ * Purpose: The reponsibility of RoomRepository is ...
  *
- * RoomView is-a ...
- * RoomView is ...
+ * RoomRepository is-a ...
+ * RoomRepository is ...
  */
-public class RoomView
+public class RoomRepository
 {
-	
+
 }

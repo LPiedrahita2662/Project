@@ -29,18 +29,18 @@ public class Door
 {
 	private boolean isLocked;
 	private boolean isFinalDoor;
-	private String exitCode;
+	private String unlockCode;
 	
 	public Door (boolean isLocked, boolean isFinalDoor, String exitCode)
 	{
 		this.isLocked = isLocked;
 		this.isFinalDoor = isFinalDoor;
-		this.exitCode = exitCode;
+		this.unlockCode = exitCode;
 	}
 	
 	public boolean checkExitCode(String exitCode)
 	{
-		return (this.exitCode == exitCode);
+		return (this.unlockCode == exitCode);
 	}
 	
 	public void unlockDoor()
@@ -56,5 +56,10 @@ public class Door
 	public boolean isFinalDoor()
 	{
 		return isFinalDoor;
+	}
+	
+	public String toString()
+	{
+	    return "isLocked = " + isLocked + ", isFinalDoor = " + isFinalDoor;
 	}
 }
