@@ -20,12 +20,6 @@
 
 import java.util.ArrayList;
 
-/**
- * Purpose: The reponsibility of InventoryModel is ...
- *
- * InventoryModel is-a ...
- * InventoryModel is ...
- */
 public class InventoryModel
 {
 	private ArrayList<Item> items;
