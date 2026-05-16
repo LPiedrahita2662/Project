@@ -18,6 +18,16 @@
 * Version: 2026-05-04
 */
 
+import java.util.ArrayList;
+
+import model.Door;
+import model.Item;
+import model.LockedItem;
+import model.Room;
+import service.FileService;
+import service.RoomRepository;
+import view.EscapeGameView;
+
 /**
  * Purpose: The reponsibility of Main is ...
  *
@@ -58,5 +68,17 @@ public class Tests
 		System.out.println(((LockedItem)safe).isSolved());
 		System.out.println(((LockedItem)safe).checkSolved("123"));
 		System.out.println(((LockedItem)safe).checkSolved("618"));
+		
+		// TESTS FILE SERVICE
+		FileService fileService = new FileService("GameData.csv");
+        ArrayList<Room> rooms = fileService.loadRooms();
+        System.out.println("Rooms loaded: " + rooms.size());
+		
+        // TESTS THE VIEW
+        RoomRepository viewRepository = new RoomRepository("GameData.csv");
+        Room firstRoom = viewRepository.getFirstRoom();
+        EscapeGameView view = new EscapeGameView();
+        view.getRoomView().renderItems(firstRoom);
+        
     }
 }
