@@ -21,12 +21,16 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import controller.RoomController;
 import model.Room;
 import model.Item;
 
@@ -37,9 +41,12 @@ import model.Item;
  */
 public class RoomView extends JPanel
 {
-	//private RoomController roomController;
+	private RoomController roomController;
 	private ArrayList<JButton> itemButtons;
 	private JButton doorButton;
+	private JLabel messageLabel;
+	private JLabel roomNameLabel;
+
 	
 	/**
 	 * Initializes a new RoomView with a door button that leads the exit and a list of item buttons.
@@ -49,9 +56,26 @@ public class RoomView extends JPanel
 		setLayout(null);
 		itemButtons = new ArrayList<JButton>();
 		doorButton = new JButton("EXIT");
-		doorButton.setBounds(400, 150, 100, 200);
+		doorButton.setBounds(400, 160, 150, 300);
+		doorButton.setBackground(Color.BLACK);
+		doorButton.setForeground(Color.WHITE);
+		doorButton.setOpaque(true);
+		doorButton.setBorderPainted(false);
 		doorButton.setActionCommand("DOOR");
 		add(doorButton);
+		
+		messageLabel = new JLabel("Click on an item to examine it.");
+		messageLabel.setForeground(Color.WHITE);
+		messageLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
+		messageLabel.setHorizontalAlignment(JLabel.CENTER);
+		messageLabel.setBounds(0, 520, 900, 30);
+		add(messageLabel);
+		
+		roomNameLabel = new JLabel("Room #1");
+		roomNameLabel.setForeground(Color.BLACK);
+		roomNameLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 26));
+		roomNameLabel.setBounds(15, 0, 300, 40);
+		add(roomNameLabel);
 	}
 	
 	/**
@@ -95,7 +119,8 @@ public class RoomView extends JPanel
 			    // set image if available otherwise show name as text
 			    if (item.getImage() != null)
 			    {
-			    	Image scaledImage = item.getImage().getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+			    	Image scaledImage = item.getImage().getImage() .getScaledInstance(item.getSize(), item.getSize(),Image.SCALE_SMOOTH);
+			    	itemButton.setBounds(item.getXPosition(), item.getYPosition(), item.getSize(), item.getSize());
 			    	itemButton.setIcon(new ImageIcon(scaledImage));
 			    }
 			    else
@@ -165,8 +190,33 @@ public class RoomView extends JPanel
 	    return itemButtons;
 	}
 	
-//	public void setRoomController(RoomController roomController)
-//	{
-//	    this.roomController = roomController;
-//	}
+	/**
+	 * Sets the message in the message bar at the bottom of the view.
+	 * 
+	 * @param message the message to be displayed in the message bar
+	 */
+	public void setMessage(String message)
+	{
+	    messageLabel.setText(message);
+	}
+	
+	/**
+	 * Sets the RoomController for this view.
+	 * 
+	 * @param roomController the RoomController to be set for this view
+	 */
+	public void setRoomController(RoomController roomController)
+	{
+	    this.roomController = roomController;
+	}
+	
+	/**
+	 * Sets the name of the room in the top left corner of the view.
+	 * 
+	 * @param name the name of the room to be displayed
+	 */
+	public void setRoomName(String name)
+	{
+	    roomNameLabel.setText(name);
+	}
 }

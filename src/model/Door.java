@@ -18,20 +18,17 @@ package model;
  */
 public class Door
 {
-	private boolean isLocked;
 	private boolean isFinalDoor;
 	private String unlockCode;
 	
 	/**
 	 * Initializes a new Door object with the locked status, final door status, and exit code.
 	 * 
-	 * @param isLocked whether the door is locked or not
 	 * @param isFinalDoor whether the door is a final door or not
 	 * @param exitCode the code required to unlock the door
 	 */
-	public Door (boolean isLocked, boolean isFinalDoor, String exitCode)
+	public Door (boolean isFinalDoor, String exitCode)
 	{
-		this.isLocked = isLocked;
 		this.isFinalDoor = isFinalDoor;
 		this.unlockCode = exitCode;
 	}
@@ -48,24 +45,6 @@ public class Door
 	}
 	
 	/**
-	 * Unlocks the door by setting the isLocked variable to false.
-	 */
-	public void unlockDoor()
-	{
-		isLocked = false;
-	}
-	
-	/**
-	 * Returns whether the door is currently locked or not.
-	 * 
-	 * @return true if the door is locked, false otherwise
-	 */
-	public boolean isLocked()
-	{
-		return isLocked;
-	}
-	
-	/**
 	 * Returns whether the door is a final door or not.
 	 * 
 	 * @return true if the door is a final door, false otherwise
@@ -77,6 +56,6 @@ public class Door
 	
 	public String toString()
 	{
-	    return "isLocked = " + isLocked + ", isFinalDoor = " + isFinalDoor;
+	    return "isFinalDoor = " + isFinalDoor;
 	}
 }

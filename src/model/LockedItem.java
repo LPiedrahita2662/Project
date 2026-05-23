@@ -25,7 +25,7 @@ public class LockedItem extends Item
 	private boolean isSolved;
 	
 	/**
-	 * Initializes a new LockedItem with the name, hint text, image, xy positions, and unlock code.
+	 * Initializes a new LockedItem with the name, hint text, image, xy positions, image size, and unlock code.
 	 * 
 	 * @param name the name of the locked item
 	 * @param hintText the hint text associated with the locked item
@@ -33,22 +33,13 @@ public class LockedItem extends Item
 	 * @param xPosition the x position of the locked item in the room
 	 * @param yPosition the y position of the locked item in the room
 	 * @param unlockCode the code required to solve the locked item
+	 * @param size the size of the locked item
 	 */
-	public LockedItem(String name, String hintText, ImageIcon image, int xPosition, int yPosition, String unlockCode)
+	public LockedItem(String name, String hintText, ImageIcon image, int xPosition, int yPosition, String unlockCode, int size)
 	{
-		super(name, hintText, image, xPosition, yPosition);
-		this.unlockCode = unlockCode;
-		isSolved = false;
-	}
-	
-	/**
-	 * Returns the unlock code for the locked item.
-	 * 
-	 * @return the unlock code for the locked item
-	 */
-	public String getUnlockCode()
-	{
-		return unlockCode;
+	    super(name, hintText, image, xPosition, yPosition, size);
+	    this.unlockCode = unlockCode;
+	    isSolved = false;
 	}
 	
 	/**

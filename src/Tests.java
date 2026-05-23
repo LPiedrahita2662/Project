@@ -20,7 +20,12 @@
 
 import java.util.ArrayList;
 
+import javax.swing.JButton;
+
+import controller.InventoryController;
+import controller.RoomController;
 import model.Door;
+import model.InventoryModel;
 import model.Item;
 import model.LockedItem;
 import model.Room;
@@ -39,19 +44,17 @@ public class Tests
     public static void main(String[] args)
     {
         // CREATES A DOOR
-    	Door door1 = new Door(true, false, "123");
+    	Door door1 = new Door(false, "123");
         System.out.println(door1);
         System.out.println(door1.checkExitCode("123"));
         System.out.println(door1.checkExitCode("853490213"));
-        door1.unlockDoor();
-        System.out.println(door1.isLocked());
 
         // CREATES A ROOM
         Room room1 = new Room("Study", door1);
         System.out.println(room1);
         
         // CREATES A VASE ITEM AND TESTS CHANGING THE ISCLICKED
-        Item vase = new Item("Vase", "The first digit is 3", null, 800, 400);
+        Item vase = new Item("Vase", "The first digit is 3", null, 800, 400, 80);
 		System.out.println(vase);
 		System.out.println(vase.isClicked());
 		vase.clickItem();
@@ -63,7 +66,7 @@ public class Tests
 		System.out.println(room1);
 		
 		// CREATES NEW LOCKED ITEM (SAFE) AND CHECKS METHODS
-		Item safe = new LockedItem("Safe", "The code is 618.", null, 500, 300, "618");
+		Item safe = new LockedItem("Safe", "The code is 618.", null, 500, 300, "618", 80);
 		System.out.println(safe);
 		System.out.println(((LockedItem)safe).isSolved());
 		System.out.println(((LockedItem)safe).checkSolved("123"));
@@ -80,5 +83,16 @@ public class Tests
         EscapeGameView view = new EscapeGameView();
         view.getRoomView().renderItems(firstRoom);
         
+        // TESTS ROOMCONTROLLER
+        RoomRepository roomRepo = new RoomRepository("GameData.csv");
+        Room roomControllerRoom = roomRepo.getFirstRoom();
+        EscapeGameView roomControllerView = new EscapeGameView();
+        RoomController roomController = new RoomController(roomControllerRoom, roomControllerView.getRoomView());
+        roomControllerView.getRoomView().renderItems(roomControllerRoom);
+
+        // TESTS INVENTORYCONTROLLER
+        InventoryModel inventoryModel = new InventoryModel();
+        InventoryController inventoryController = new InventoryController(inventoryModel, roomControllerView.getInventoryView());
+        roomController.setInventoryController(inventoryController);
     }
 }

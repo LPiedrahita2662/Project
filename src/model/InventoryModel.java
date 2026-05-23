@@ -52,16 +52,6 @@ public class InventoryModel
 	}
 	
 	/**
-	 * Removes an item from the inventory.
-	 * 
-	 * @param item the item to be removed from the inventory
-	 */
-	public void removeItem(Item item)
-	{
-		items.remove(item);
-	}
-	
-	/**
 	 * Returns the selected item in the inventory.
 	 * 
 	 * @return the selected item in the inventory

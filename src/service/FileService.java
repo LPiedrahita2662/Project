@@ -88,10 +88,11 @@ public class FileService
 					String imageFileName = lineScanner.next();
 					int xPosition = lineScanner.nextInt();
 					int yPosition = lineScanner.nextInt();
+					int size = lineScanner.nextInt();
 					
 					// loads image and adds item to the current room
 					ImageIcon itemImage = loadImage(imageFileName);
-					Item item = new Item(itemName, hintText, itemImage, xPosition, yPosition);
+					Item item = new Item(itemName, hintText, itemImage, xPosition, yPosition, size);
 					currentRoom.addItem(item);
 				}
 				else if (typeOfData.equals("LOCKEDITEM"))
@@ -102,9 +103,10 @@ public class FileService
 					int xPosition = lineScanner.nextInt();
 					int yPosition = lineScanner.nextInt();
 					String unlockCode = lineScanner.next();
+					int size = lineScanner.nextInt();
 					
 					ImageIcon itemImage = loadImage(imageFileName);
-					LockedItem item = new LockedItem(itemName, hintText, itemImage, xPosition, yPosition, unlockCode);
+					LockedItem item = new LockedItem(itemName, hintText, itemImage, xPosition, yPosition, unlockCode, size);
 					currentRoom.addItem(item);
 				}
 				else if (typeOfData.equals("DOOR"))
@@ -112,7 +114,7 @@ public class FileService
 					boolean isFinalDoor = lineScanner.nextBoolean();
 					String unlockCode = lineScanner.next();
 					
-					Door door = new Door(true, isFinalDoor, unlockCode);
+					Door door = new Door(isFinalDoor, unlockCode);
 					currentRoom.setDoor(door);
 				}
 				

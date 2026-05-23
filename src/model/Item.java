@@ -15,17 +15,17 @@ package model;
 import javax.swing.ImageIcon;
 
 /**
- * Purpose: Represents an item in the game. An item has a name, hint text, image, position, and can be opened or clicked.
+ * Purpose: Represents an item in the game. An item has a name, hint text, size, image, position, and can be opened or clicked.
  */
 public class Item
 {
 	private String name;
 	private String hintText;
-	private boolean isOpened;
 	private boolean isClicked;
 	private ImageIcon image;
 	private int xPosition;
 	private int yPosition;
+	private int size;
 	
 	/**
 	 * Initializes a new Item object with the name, hint text, image, and xy positions.
@@ -36,15 +36,15 @@ public class Item
 	 * @param xPosition the x position of the item in the room
 	 * @param yPosition the y position of the item in the room
 	 */
-	public Item(String name, String hintText, ImageIcon image, int xPosition, int yPosition)
+	public Item(String name, String hintText, ImageIcon image, int xPosition, int yPosition, int size)
 	{
 		this.name = name;
 		this.hintText = hintText;
 		this.image = image;
 		this.xPosition = xPosition;
 		this.yPosition = yPosition;
-		isOpened = false;
 		isClicked = false;
+		this.size = size;
 	}
 	
 	/**
@@ -78,6 +78,16 @@ public class Item
 	}
 	
 	/**
+	 * Returns the size of the item.
+	 * 
+	 * @return the size of the item
+	 */
+	public int getSize()
+	{
+	    return size;
+	}
+	
+	/**
 	 * Returns the x position of the item in the room.
 	 * 
 	 * @return the x position of the item
@@ -98,16 +108,6 @@ public class Item
 	}
 	
 	/**
-	 * Returns whether the item has been opened or not.
-	 * 
-	 * @return true if the item is opened, false otherwise
-	 */
-	public boolean isOpened()
-	{
-		return isOpened;
-	}
-	
-	/**
 	 * Returns whether the item has been clicked or not.
 	 * 
 	 * @return true if the item has been clicked, false otherwise
@@ -115,14 +115,6 @@ public class Item
 	public boolean isClicked()
 	{
 		return isClicked;
-	}
-	
-	/**
-	 * Setting the isOpened variable to true.
-	 */
-	public void openItem()
-	{
-		isOpened = true;
 	}
 	
 	/**
@@ -135,6 +127,6 @@ public class Item
 	
 	public String toString()
 	{
-		return "name = " + name + ", hintText = " + hintText + ", isClicked = " + isClicked + ", isOpened = " + isOpened + ", x = " + xPosition + ", y = " + yPosition;
+		return "name = " + name + ", hintText = " + hintText + ", isClicked = " + isClicked + ", x = " + xPosition + ", y = " + yPosition;
 	}
 }

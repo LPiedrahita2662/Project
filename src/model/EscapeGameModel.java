@@ -36,16 +36,6 @@ public class EscapeGameModel
 	}
 	
 	/**
-	 * Returns the player's inventory of collected items.
-	 * 
-	 * @return the ArrayList of items in the player's inventory
-	 */
-	public InventoryModel getInventory()
-	{
-		return inventoryModel;
-	}
-	
-	/**
 	 * Returns whether or not the game has been won.
 	 * 
 	 * @return true if the game is won, false otherwise
@@ -85,6 +75,16 @@ public class EscapeGameModel
 		this.currentRoom = currentRoom;
 	}
 	
+	/**
+	 * Returns the inventory model.
+	 * 
+	 * @return the inventory model
+	 */
+	public InventoryModel getInventoryModel()
+	{
+	    return inventoryModel;
+	}
+
 	public String toString()
 	{
 		return "inventoryModel = " + inventoryModel + ", isWon = " + isWon + ", currentRoom = " + currentRoom;
