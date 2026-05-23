@@ -1,0 +1,11 @@
+ROOM,Library
+ITEM,Vase,The first number is 3.,vase.png,750,350,80
+ITEM,Book,The second number is 8.,book.png,200,400,80
+LOCKEDITEM,Safe,The safe needs a code.,safe.png,100,350,38,80
+DOOR,false,38
+
+ROOM,Study
+ITEM,Painting,The first number is 6.,painting.png,100,400,80
+ITEM,Bag,The second number is 3.,bag.png,200,400,80
+LOCKEDITEM,Locker,The locker needs a code.,locker.png,50,400,63,150
+DOOR,true,63
