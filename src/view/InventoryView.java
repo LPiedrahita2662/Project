@@ -73,6 +73,7 @@ public class InventoryView extends JPanel
         {
             remove(inventoryButtons.get(i));
         }
+        
         inventoryButtons.clear();
 
         // adds new buttons for each item in the inventory
@@ -84,9 +85,8 @@ public class InventoryView extends JPanel
             // set image if available otherwise show name
             if (item.getImage() != null)
             {
-                Image scaledImage = item.getImage().getImage()
-                    .getScaledInstance(120, 120, Image.SCALE_SMOOTH);
-                itemButton.setIcon(new ImageIcon(scaledImage));
+            	Image scaledImage = item.getImage().getImage().getScaledInstance(-1, 80, Image.SCALE_SMOOTH);
+            	itemButton.setIcon(new ImageIcon(scaledImage));
             }
             else
             {
@@ -94,12 +94,15 @@ public class InventoryView extends JPanel
                 itemButton.setForeground(Color.WHITE);
             }
 
-            itemButton.setPreferredSize(new Dimension(160, 160));
-            itemButton.setMaximumSize(new Dimension(160, 160));
-            itemButton.setBackground(new Color(60, 60, 75));
+            itemButton.setPreferredSize(new Dimension(100, 100));
+            itemButton.setMaximumSize(new Dimension(100, 100));
+            itemButton.setBackground(new Color(45, 45, 55));
             itemButton.setOpaque(true);
+            itemButton.setBorderPainted(false);
+            itemButton.setContentAreaFilled(false);
             itemButton.setAlignmentX(CENTER_ALIGNMENT);
             itemButton.setActionCommand(item.getName());
+            
 
             // add controller as listener if controller is set
             if (inventoryController != null)
@@ -122,6 +125,7 @@ public class InventoryView extends JPanel
      */
     public void highlightSelectedItem(String itemName)
     {
+    	// highlights the selected item button and resets all others to the default background
         for (int i = 0; i < inventoryButtons.size(); i++)
         {
             if (inventoryButtons.get(i).getActionCommand().equals(itemName))
@@ -132,7 +136,7 @@ public class InventoryView extends JPanel
             else
             {
                 inventoryButtons.get(i).setBackground(
-                    new Color(60, 60, 75));
+                    new Color(45, 45, 55));
             }
         }
     }
@@ -151,7 +155,6 @@ public class InventoryView extends JPanel
         {
             inventoryButtons.get(i).addActionListener(inventoryController);
         }
-        
     }
 
     /**

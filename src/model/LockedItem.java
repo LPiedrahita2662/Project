@@ -71,6 +71,12 @@ public class LockedItem extends Item
 		return isSolved;
 	}
 	
+	/**
+	 * Returns a string representation of the locked item.
+	 *
+	 * @return a string with the name and isSolved status
+	 */
+	@Override
 	public String toString()
 	{
 	    return "name = " + getName() + ", isSolved = " + isSolved;

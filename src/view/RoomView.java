@@ -16,12 +16,13 @@
 * Java SE 8 API Documentation.
 * https://docs.oracle.com/javase/8/docs/api/javax/swing/JButton.html
 * 
-* Version: 2026-05-11
+* Version: 2026-05-31
 */
 package view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ import model.Room;
 import model.Item;
 
 /**
- * Purpose: RoomView displays the current room background and all of the items in the room at their x and y positions.
+ * Purpose: RoomView displays the current room background, furniture, items, door, reset button, and message bar.
  *
  * RoomView is-a JPanel
  */
@@ -46,43 +47,114 @@ public class RoomView extends JPanel
 	private JButton doorButton;
 	private JLabel messageLabel;
 	private JLabel roomNameLabel;
+	private String currentRoomName;
+	private JButton resetButton;
+	private JLabel clueLabel;
 
 	
 	/**
-	 * Initializes a new RoomView with a door button that leads the exit and a list of item buttons.
+	 * Initializes a new RoomView with a door button, reset button, clue label, message label, room name label, and an empty list of item buttons.
 	 */
 	public RoomView()
 	{
-		setLayout(null);
-		itemButtons = new ArrayList<JButton>();
-		doorButton = new JButton("EXIT");
-		doorButton.setBounds(400, 160, 150, 300);
-		doorButton.setBackground(Color.BLACK);
-		doorButton.setForeground(Color.WHITE);
-		doorButton.setOpaque(true);
-		doorButton.setBorderPainted(false);
-		doorButton.setActionCommand("DOOR");
-		add(doorButton);
-		
-		messageLabel = new JLabel("Click on an item to examine it.");
-		messageLabel.setForeground(Color.WHITE);
-		messageLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
-		messageLabel.setHorizontalAlignment(JLabel.CENTER);
-		messageLabel.setBounds(0, 520, 900, 30);
-		add(messageLabel);
-		
-		roomNameLabel = new JLabel("Room #1");
-		roomNameLabel.setForeground(Color.BLACK);
-		roomNameLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 26));
-		roomNameLabel.setBounds(15, 0, 300, 40);
-		add(roomNameLabel);
+	    setLayout(null);
+	    itemButtons = new ArrayList<JButton>();
+
+	    // Reset button in the top right corner of the view
+	    resetButton = new JButton("Reset Game")
+	    {
+	        @Override
+	        protected void paintComponent(Graphics g)
+	        {
+	            // draw blue rounded background with black outline and centered text
+	            g.setColor(new Color(70, 130, 180));
+	            g.fillRoundRect(0, 0, getWidth(), getHeight(), 8, 8);
+	            g.setColor(Color.BLACK);
+	            g.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 8, 8);
+	            g.drawRoundRect(1, 1, getWidth() - 3, getHeight() - 3, 8, 8);
+	            g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
+	            FontMetrics fm = g.getFontMetrics();
+	            int textX = (getWidth() - fm.stringWidth("Reset Game")) / 2;
+	            int textY = (getHeight() + fm.getAscent() - fm.getDescent()) / 2;
+	            g.drawString("Reset Game", textX, textY);
+	        }
+	    };
+	    resetButton.setBounds(790, 8, 130, 24);
+	    resetButton.setFocusPainted(false);
+	    resetButton.setBorderPainted(false);
+	    resetButton.setContentAreaFilled(false);
+	    resetButton.setOpaque(false);
+	    resetButton.setActionCommand("RESET");
+	    add(resetButton);
+
+	    doorButton = new JButton("EXIT")
+	    {
+	        @Override
+	        protected void paintComponent(Graphics g)
+	        {
+	            // draw black door with white border, gray doorknob, and room label
+	            g.setColor(Color.BLACK);
+	            g.fillRect(0, 0, getWidth(), getHeight());
+	            g.setColor(Color.WHITE);
+	            g.drawRect(2, 2, getWidth() - 4, getHeight() - 4);
+	            g.setColor(Color.GRAY);
+	            g.fillOval(12, getHeight() / 2, 18, 18);
+	            g.setColor(Color.WHITE);
+	            g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
+	            if ("Study".equals(currentRoomName))
+	            {
+	                g.drawString("FINAL EXIT", getWidth() / 2 - 42, 25);
+	            }
+	            else
+	            {
+	                g.drawString("NEXT ROOM", getWidth() / 2 - 48, 25);
+	            }
+	        }
+	    };
+	    doorButton.setBounds(400, 170, 150, 300);
+	    doorButton.setBorderPainted(false);
+	    doorButton.setContentAreaFilled(false);
+	    doorButton.setFocusPainted(false);
+	    doorButton.setActionCommand("DOOR");
+	    add(doorButton);
+
+	    // Message label at the bottom of the view
+	    messageLabel = new JLabel("Click on an item to examine it.");
+	    messageLabel.setForeground(Color.WHITE);
+	    messageLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
+	    messageLabel.setHorizontalAlignment(JLabel.CENTER);
+	    messageLabel.setBounds(30, 540, 900, 30);
+	    add(messageLabel);
+
+	    JLabel hintLabel = new JLabel("Make sure to examine all 3 items before moving to the next room.");
+	    hintLabel.setForeground(Color.WHITE);
+	    hintLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
+	    hintLabel.setHorizontalAlignment(JLabel.CENTER);
+	    hintLabel.setBounds(30, 575, 900, 25);
+	    add(hintLabel);
+
+	    // Clue counter label
+	    clueLabel = new JLabel("Clues found: 0/3");
+	    clueLabel.setForeground(Color.WHITE);
+	    clueLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
+	    clueLabel.setHorizontalAlignment(JLabel.CENTER);
+	    clueLabel.setBounds(790, 36, 130, 20);
+	    add(clueLabel);
+
+	    // Room name label
+	    roomNameLabel = new JLabel("Room #1");
+	    roomNameLabel.setForeground(Color.WHITE);
+	    roomNameLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 26));
+	    roomNameLabel.setBounds(15, 0, 300, 40);
+	    add(roomNameLabel);
 	}
 	
 	/**
-	 * Uses the built in paintComponent method to draw the background of the room. 
-	 * The top 75% of the panel is gray to represent the walls and the bottom 25% is brown to represent the floor.
-	 * 
-	 * @param g the Graphics object used to draw the background
+	 * Uses the built in paintComponent method to draw the room background, furniture, and other elements.
+	 * The top 75% is gray for the wall and bottom 25% is brown for the floor.
+	 * The Library room draws a bookshelf and table. The Study room draws a desk.
+	 *
+	 * @param backgroundGraphics the Graphics object used to draw the background
 	 */
 	@Override
 	protected void paintComponent(Graphics backgroundGraphics)
@@ -94,55 +166,124 @@ public class RoomView extends JPanel
 
 	    backgroundGraphics.setColor(new Color(105, 55, 0));
 	    backgroundGraphics.fillRect(0, (int)(getHeight() * 0.75), getWidth(), (int)(getHeight() * 0.25));
+	    
+	    if ("Library".equals(currentRoomName))
+	    {
+	        // Code for Bookshelf
+	        backgroundGraphics.setColor(new Color(101, 67, 33));
+	        backgroundGraphics.fillRect(220, 291, 130, 180);
+	        backgroundGraphics.setColor(new Color(70, 42, 14));
+	        backgroundGraphics.fillRect(220, 291, 130, 10);
+	        backgroundGraphics.fillRect(220, 351, 130, 8);
+	        backgroundGraphics.fillRect(220, 411, 130, 8);
+	        backgroundGraphics.fillRect(220, 461, 130, 10);
+	        backgroundGraphics.fillRect(220, 291, 8, 180);
+	        backgroundGraphics.fillRect(342, 291, 8, 180);
+	        backgroundGraphics.setColor(new Color(180, 40, 40));
+	        backgroundGraphics.fillRect(230, 306, 18, 44);
+	        backgroundGraphics.setColor(new Color(40, 80, 160));
+	        backgroundGraphics.fillRect(250, 309, 15, 41);
+	        backgroundGraphics.setColor(new Color(34, 120, 60));
+	        backgroundGraphics.fillRect(267, 303, 20, 47);
+	        backgroundGraphics.setColor(new Color(180, 140, 30));
+	        backgroundGraphics.fillRect(289, 311, 14, 39);
+	        backgroundGraphics.setColor(new Color(120, 40, 120));
+	        backgroundGraphics.fillRect(305, 305, 17, 45);
+	        backgroundGraphics.setColor(new Color(160, 60, 30));
+	        backgroundGraphics.fillRect(230, 363, 22, 47);
+	        backgroundGraphics.setColor(new Color(40, 130, 130));
+	        backgroundGraphics.fillRect(254, 366, 16, 44);
+	        backgroundGraphics.setColor(new Color(180, 40, 40));
+	        backgroundGraphics.fillRect(272, 361, 19, 49);
+	        backgroundGraphics.setColor(new Color(50, 50, 140));
+	        backgroundGraphics.fillRect(293, 365, 14, 45);
+	        backgroundGraphics.setColor(new Color(34, 120, 60));
+	        backgroundGraphics.fillRect(309, 362, 20, 48);
+
+	        // Code for Table
+	        backgroundGraphics.setColor(new Color(101, 67, 33));
+	        backgroundGraphics.fillRect(650, 385, 200, 14);
+	        backgroundGraphics.setColor(new Color(70, 42, 14));
+	        backgroundGraphics.fillRect(660, 399, 180, 9);
+	        backgroundGraphics.setColor(new Color(101, 67, 33));
+	        backgroundGraphics.fillRect(660, 408, 13, 80);
+	        backgroundGraphics.fillRect(827, 408, 13, 80);
+	        backgroundGraphics.setColor(new Color(70, 42, 14));
+	        backgroundGraphics.fillRect(663, 408, 4, 80);
+	        backgroundGraphics.fillRect(830, 408, 4, 80);
+	        backgroundGraphics.setColor(new Color(101, 67, 33));
+	        backgroundGraphics.fillRect(660, 465, 180, 9);
+	    }
+
+	    if ("Study".equals(currentRoomName))
+	    {
+	        // Code for Desk
+	        backgroundGraphics.setColor(new Color(101, 67, 33));
+	        backgroundGraphics.fillRect(605, 380, 280, 14);
+	        backgroundGraphics.setColor(new Color(70, 42, 14));
+	        backgroundGraphics.fillRect(615, 394, 260, 9);
+	        backgroundGraphics.setColor(new Color(101, 67, 33));
+	        backgroundGraphics.fillRect(615, 403, 13, 80);
+	        backgroundGraphics.fillRect(862, 403, 13, 80);
+	        backgroundGraphics.setColor(new Color(70, 42, 14));
+	        backgroundGraphics.fillRect(618, 403, 4, 80);
+	        backgroundGraphics.fillRect(865, 403, 4, 80);
+	        backgroundGraphics.setColor(new Color(101, 67, 33));
+	        backgroundGraphics.fillRect(615, 460, 260, 9);
+	        backgroundGraphics.setColor(new Color(80, 50, 20));
+	        backgroundGraphics.fillRect(705, 394, 80, 9);
+	        backgroundGraphics.setColor(new Color(180, 140, 60));
+	        backgroundGraphics.fillRect(738, 397, 14, 4);
+	    }
 	}
 	
 	/**
-	 * Renders of all the items in the room as buttons at their postions from the CSV.
-	 * 
+	 * Renders all items in the room as buttons at their positions loaded from the CSV file.
+	 *
 	 * @param room the room whose items are being rendered
 	 */
 	public void renderItems(Room room)
 	{
-		// removes all item buttons from the view when changing rooms
-		for (JButton button : itemButtons)
-		{
-			remove(button);
-		}
-		itemButtons.clear();
-		
-		for (int i = 0; i < room.getItems().size(); i++)
-		{
-			 Item item = room.getItems().get(i);
-			    
-			    JButton itemButton = new JButton();
-			    
-			    // set image if available otherwise show name as text
-			    if (item.getImage() != null)
-			    {
-			    	Image scaledImage = item.getImage().getImage() .getScaledInstance(item.getSize(), item.getSize(),Image.SCALE_SMOOTH);
-			    	itemButton.setBounds(item.getXPosition(), item.getYPosition(), item.getSize(), item.getSize());
-			    	itemButton.setIcon(new ImageIcon(scaledImage));
-			    }
-			    else
-			    {
-			        itemButton.setText(item.getName());
-			    }
-			    
-			    // position button at item x and y from file
-			    itemButton.setBounds(item.getXPosition(),item.getYPosition(), 80, 80);
-			    itemButton.setBorderPainted(false);
-			    itemButton.setContentAreaFilled(false);
-			    itemButton.setFocusPainted(false);
-			    
-			    // action command used by controller to identify which item was clicked
-			    itemButton.setActionCommand(item.getName());
-			    
-			    itemButtons.add(itemButton);
-			    add(itemButton);
-		}
-		
-		revalidate();
-		repaint();
+	    // removes all item buttons from the view when changing rooms
+	    for (JButton button : itemButtons)
+	    {
+	        remove(button);
+	    }
+	    itemButtons.clear();
+
+	    for (int i = 0; i < room.getItems().size(); i++)
+	    {
+	        Item item = room.getItems().get(i);
+
+	        JButton itemButton = new JButton();
+
+	        // set image if available otherwise show name as text
+	        if (item.getImage() != null)
+	        {
+	        	Image scaledImage = item.getImage().getImage().getScaledInstance(-1, item.getSize(), Image.SCALE_SMOOTH);
+	        	ImageIcon icon = new ImageIcon(scaledImage);
+	        	itemButton.setIcon(icon);
+	        	itemButton.setBounds(item.getXPosition(), item.getYPosition(), icon.getIconWidth(), item.getSize());
+	        }
+	        else
+	        {
+	            itemButton.setText(item.getName());
+	            itemButton.setBounds(item.getXPosition(), item.getYPosition(), 100, 30);
+	        }
+
+	        itemButton.setBorderPainted(false);
+	        itemButton.setContentAreaFilled(false);
+	        itemButton.setFocusPainted(false);
+
+	        // action command used by controller to identify which item was clicked
+	        itemButton.setActionCommand(item.getName());
+
+	        itemButtons.add(itemButton);
+	        add(itemButton);
+	    }
+
+	    revalidate();
+	    repaint();
 	}
 	
 	/**
@@ -152,6 +293,7 @@ public class RoomView extends JPanel
 	 */
 	public void removeItemFromView(String itemName)
 	{
+		// searches for the button matching the item name and removes it from the view
 	    JButton toRemove = null;
 	    for (int i = 0; i < itemButtons.size(); i++)
 	    {
@@ -208,6 +350,7 @@ public class RoomView extends JPanel
 	public void setRoomController(RoomController roomController)
 	{
 	    this.roomController = roomController;
+	    resetButton.addActionListener(roomController);
 	}
 	
 	/**
@@ -218,5 +361,17 @@ public class RoomView extends JPanel
 	public void setRoomName(String name)
 	{
 	    roomNameLabel.setText(name);
+	    this.currentRoomName = name;
+	    repaint();
+	}
+	
+	/**
+	 * Sets the clue counter label to show how many items have been collected.
+	 *
+	 * @param count the number of items currently in the inventory
+	 */
+	public void setClueCount(int count)
+	{
+	    clueLabel.setText("Clues found: " + count + "/3");
 	}
 }

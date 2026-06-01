@@ -7,7 +7,7 @@
 * Java, Java, Java: Object-Oriented Problem Solving
 * https://open.umn.edu/opentextbooks/textbooks/java-java-java-object-oriented-problem-solving
 *
-* Version: 2026-05-18
+* Version: 2026-05-31
 */
 
 package controller;
@@ -63,15 +63,17 @@ public class InventoryController implements ActionListener
 	 */
 	public void handleItemClick(String itemName)
 	{
+		// searches the inventory for the item that matches the clicked button name
 		for (int i = 0; i < inventoryModel.getItems().size(); i++)
 		{
 			Item item = inventoryModel.getItems().get(i);
 			if (item.getName().equals(itemName))
 			{
+				// updates the selected item in the model and highlights it in the view
 				inventoryModel.setSelectedItem(item);
-				
 				inventoryView.highlightSelectedItem(itemName);
 				
+				// shows the hint text for the selected item
 				JOptionPane.showMessageDialog(inventoryView, item.getHintText(), item.getName(), JOptionPane.INFORMATION_MESSAGE);
 				break;
 			}

@@ -54,6 +54,12 @@ public class Door
 		return isFinalDoor;
 	}
 	
+	/**
+	 * Returns a string representation of the door.
+	 *
+	 * @return a string with the isFinalDoor status
+	 */
+	@Override
 	public String toString()
 	{
 	    return "isFinalDoor = " + isFinalDoor;

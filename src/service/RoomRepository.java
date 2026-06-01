@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import model.Room;
 
 /**
- * Purpose: RoomRepository loads rooms from a file using the FileService and manages the all the rooms in the game.
+ * Purpose: RoomRepository loads rooms from a file using the FileService and manages all the rooms in the game.
  */
 public class RoomRepository
 {
@@ -86,7 +86,7 @@ public class RoomRepository
 	}
 	
 	/**
-	 * Returns all of the rooms from the respository.
+	 * Returns all of the rooms from the repository.
 	 * 
 	 * @return the ArrayList of rooms in the repository
 	 */
@@ -95,9 +95,14 @@ public class RoomRepository
 		return rooms;
 	}
 	
+	/**
+	 * Returns a string representation of the room repository.
+	 *
+	 * @return a string with the number of rooms and the current room index
+	 */
+	@Override
 	public String toString()
     {
         return "RoomRepository - rooms = " + rooms.size() + ", roomIndex = " + roomIndex;
     }
-	
 }

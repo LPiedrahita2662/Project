@@ -22,7 +22,7 @@ public class Main
 {
     public static void main(String[] args)
     {
-        // load the rooms from CSV file
+        // loads the rooms from the CSV file
         RoomRepository roomRepository = new RoomRepository("GameData.csv");
 
         // creates the game model with the first room
@@ -32,6 +32,6 @@ public class Main
         EscapeGameView gameView = new EscapeGameView();
 
         // creates the controller and starts the game
-        EscapeGameController controller = new EscapeGameController(gameModel, gameView, roomRepository);
+        new EscapeGameController(gameModel, gameView, roomRepository);
     }
 }

@@ -1,11 +1,11 @@
 ROOM,Library
-ITEM,Vase,The first number is 3.,vase.png,750,350,80
-ITEM,Book,The second number is 8.,book.png,200,400,80
-LOCKEDITEM,Safe,The safe needs a code.,safe.png,100,350,38,80
-DOOR,false,38
+ITEM,Vase,A rolled up note is inside the vase. It reads - how many days are in a week.,vase.png,702,300,95
+ITEM,Book,A handwritten note falls out of the book. It reads - how many strikes to strike out in baseball.,book.png,325,302,50
+LOCKEDITEM,Safe,Inside the safe is a journal entry that reads - I have been here for as many years as there are days in a week. Remember this number.,safe.png,55,370,73,110
+DOOR,false,7
 
 ROOM,Study
-ITEM,Painting,The first number is 6.,painting.png,100,400,80
-ITEM,Bag,The second number is 3.,bag.png,200,400,80
-LOCKEDITEM,Locker,The locker needs a code.,locker.png,50,400,63,150
-DOOR,true,63
+ITEM,Painting,A note is taped to the back of the painting. It reads - how many suits are in a standard deck of cards.,painting.png,700,130,110
+ITEM,Bag,A crumpled note is at the bottom of the bag. It reads - how many seconds are in a minute.,bag.png,705,308,80
+LOCKEDITEM,Locker,A note inside reads - combine the number from the safe with the suits and seconds you found.,locker.png,90,285,460,180
+DOOR,true,7460

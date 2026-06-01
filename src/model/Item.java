@@ -28,13 +28,14 @@ public class Item
 	private int size;
 	
 	/**
-	 * Initializes a new Item object with the name, hint text, image, and xy positions.
-	 * 
+	 * Initializes a new Item object with the name, hint text, image, xy positions, and size.
+	 *
 	 * @param name the name of the item
 	 * @param hintText the hint text associated with the item
 	 * @param image the image representing the item
 	 * @param xPosition the x position of the item in the room
 	 * @param yPosition the y position of the item in the room
+	 * @param size the size of the item used for scaling the image
 	 */
 	public Item(String name, String hintText, ImageIcon image, int xPosition, int yPosition, int size)
 	{
@@ -125,6 +126,12 @@ public class Item
 		isClicked = true;
 	}
 	
+	/**
+	 * Returns a string representation of the item.
+	 *
+	 * @return a string with the name, hint text, isClicked status, and position
+	 */
+	@Override
 	public String toString()
 	{
 		return "name = " + name + ", hintText = " + hintText + ", isClicked = " + isClicked + ", x = " + xPosition + ", y = " + yPosition;

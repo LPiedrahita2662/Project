@@ -68,8 +68,8 @@ public class Room
 
 	/**
 	 * Returns the name of the room.
-	 * 
-	 * @return the roomName
+	 *
+	 * @return the name of the room as a String
 	 */
 	public String getRoomName()
 	{
@@ -96,6 +96,12 @@ public class Room
 		this.door = door;
 	}
 	
+	/**
+	 * Returns a string representation of the room.
+	 *
+	 * @return a string with the room name, door, and list of items
+	 */
+	@Override
 	public String toString()
 	{
 	    return "roomName = " + roomName + ", door = " + door + ", items = " + items;

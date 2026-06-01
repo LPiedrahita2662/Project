@@ -12,7 +12,7 @@
 * Java SE 8 API Documentation.
 * https://docs.oracle.com/javase/8/docs/api/java/util/Scanner.html
 * 
-* Version: 2026-05-04
+* Version: 2026-05-31
 */
 
 package service;
@@ -38,7 +38,7 @@ public class FileService
 	private ArrayList<Room> roomsFromFile;
 	
 	/**
-	 * Initalizes a new FileService with the file name to load rooms from.
+	 * Initializes a new FileService with the file name to load rooms from.
 	 * 
 	 * @param fileName the CSV file name
 	 */
@@ -105,6 +105,7 @@ public class FileService
 					String unlockCode = lineScanner.next();
 					int size = lineScanner.nextInt();
 					
+					// loads image and adds locked item to the current room
 					ImageIcon itemImage = loadImage(imageFileName);
 					LockedItem item = new LockedItem(itemName, hintText, itemImage, xPosition, yPosition, unlockCode, size);
 					currentRoom.addItem(item);

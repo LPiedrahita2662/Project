@@ -23,7 +23,7 @@ import model.Room;
 import view.RoomView;
 
 /**
- * Purpose: RoomController handles all user interactions with the room, item clicks, locked item codes, and door clicks.
+ * Purpose: RoomController handles all user interactions with the room including item clicks, locked item code entry, door clicks, and game reset.
  *
  * RoomController is-a ActionListener
  */
@@ -33,9 +33,10 @@ public class RoomController implements ActionListener
 	private RoomView roomView;
 	private InventoryController inventoryController;
 	private EscapeGameController escapeGameController;
+	private int roomItemsCollected = 0;
 	
 	/**
-	 * Initalizes the RoomController with the room and roomView and sets up the action listener for the door button.
+	 * Initializes the RoomController with the room and roomView and sets up the action listener for the door button.
 	 * 
 	 * @param room the current room
 	 * @param roomView the room view associated with the current room
@@ -56,19 +57,26 @@ public class RoomController implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		String command = e.getActionCommand();
-		
-		if (command.equals("DOOR"))
-		{
-			if (escapeGameController != null)
-			{
-				escapeGameController.handleDoorClick();
-			}
-		}
-		else
-		{
-			handleItemClick(command);
-		}
+	    String command = e.getActionCommand();
+	    
+	    if (command.equals("DOOR"))
+	    {
+	        if (escapeGameController != null)
+	        {
+	            escapeGameController.handleDoorClick();
+	        }
+	    }
+	    else if (command.equals("RESET"))
+	    {
+	        if (escapeGameController != null)
+	        {
+	            escapeGameController.handleReset();
+	        }
+	    }
+	    else
+	    {
+	        handleItemClick(command);
+	    }
 	}
 	
 	/**
@@ -78,11 +86,13 @@ public class RoomController implements ActionListener
 	 */
 	public void handleItemClick(String itemName)
 	{
+		// searches the room for the item that matches the clicked button name
 	    for (int i = 0; i < room.getItems().size(); i++)
 	    {
 	        Item item = room.getItems().get(i);
 	        if (item.getName().equals(itemName))
 	        {
+	        	// marks the item as clicked and handles it based on whether it is locked or not
 	            item.clickItem();
 
 	            if (item instanceof LockedItem)
@@ -108,7 +118,14 @@ public class RoomController implements ActionListener
 	{
 	    String code = JOptionPane.showInputDialog(roomView, "Enter the code to unlock " + item.getName() + ":", item.getName(), JOptionPane.QUESTION_MESSAGE);
 
-	    if (code != null && item.checkSolved(code))
+	    // null means the player clicked cancel so exit without showing an error
+	    if (code == null)
+	    {
+	        return;
+	    }
+	    
+	    // if code is correct show hint and move to inventory, otherwise show error
+	    if (item.checkSolved(code))
 	    {
 	        JOptionPane.showMessageDialog(roomView, item.getHintText(), item.getName(), JOptionPane.INFORMATION_MESSAGE);
 	        moveItemIntoInventory(item);
@@ -120,8 +137,8 @@ public class RoomController implements ActionListener
 	}
 	
 	/**
-	 * Removes item from the room and adds it to the inventory.
-	 * 
+	 * Removes the item from the room and room view and adds it to the inventory. Also updates the clue counter in the view.
+	 *
 	 * @param item the item to move into the inventory
 	 */
 	public void moveItemIntoInventory(Item item)
@@ -132,6 +149,8 @@ public class RoomController implements ActionListener
 	    if (inventoryController != null)
 	    {
 	        inventoryController.addItemToInventory(item);
+	        roomItemsCollected++;
+	        roomView.setClueCount(roomItemsCollected);
 	    }
 	}
 
@@ -143,6 +162,7 @@ public class RoomController implements ActionListener
 	public void setRoom(Room room)
 	{
 	    this.room = room;
+	    roomItemsCollected = 0;
 	}
 	
 	/**

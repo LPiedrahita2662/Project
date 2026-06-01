@@ -7,7 +7,7 @@
 * Java, Java, Java: Object-Oriented Problem Solving
 * https://open.umn.edu/opentextbooks/textbooks/java-java-java-object-oriented-problem-solving
 *
-* Version: 2026-05-04
+* Version: 2026-05-31
 */
 
 package model;
@@ -71,6 +71,12 @@ public class InventoryModel
 		this.selectedItem = selectedItem;
 	}
 	
+	/**
+	 * Returns a string representation of the inventory model.
+	 *
+	 * @return a string with the list of items and the selected item
+	 */
+	@Override
 	public String toString()
 	{
 		return "items = " + items + ", selectedItem = " + selectedItem;

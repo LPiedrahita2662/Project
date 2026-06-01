@@ -20,14 +20,12 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * Purpose: EscapeGameView is the main view of the game, holds the room view, inventory view, and the label and message bar.
- * 
+ * Purpose: EscapeGameView is the main view of the game, holds the room view and inventory view.
+ *
  * EscapeGameView is-a JFrame
  */
 public class EscapeGameView extends JFrame
@@ -43,6 +41,7 @@ public class EscapeGameView extends JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Escape Room Game");
 		setMinimumSize(new Dimension(1100, 650));
+		setResizable(false);
 		
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());

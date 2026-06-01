@@ -12,8 +12,6 @@
 
 package model;
 
-import java.util.ArrayList;
-
 /**
  * Purpose: EscapeGameModel holds the player inventory, the current room, and whether the game is won or not.
  */
@@ -85,6 +83,12 @@ public class EscapeGameModel
 	    return inventoryModel;
 	}
 
+	/**
+	 * Returns a string representation of the escape game model.
+	 *
+	 * @return a string with the inventory model, isWon status, and current room
+	 */
+	@Override
 	public String toString()
 	{
 		return "inventoryModel = " + inventoryModel + ", isWon = " + isWon + ", currentRoom = " + currentRoom;
